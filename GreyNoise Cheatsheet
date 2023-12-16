@@ -1,0 +1,130 @@
+#GreyNoise
+
+#IP Data
+ip
+The IP address of the scanning device IP
+
+cve
+A list of cves the device has been assigned over the past 90 days
+
+classification
+Whether the device has been categorized as unknown, benign, or malicious
+
+first_seen
+The date the device was first observed by GreyNoise
+
+last_seen
+The date the device was most recently observed by GreyNoise
+
+actor
+The benign actor the device has been associated with, such as Shodan, GoogleBot, BinaryEdge, etc
+
+tags
+A list of tags the device has been assigned over the past 90 days
+
+spoofable
+This IP address has been opportunistically scanning the Internet, however has failed to complete a full TCP connection. Any reported activity could be spoofed.
+
+vpn
+This IP is associated with a VPN service. Activity, malicious or otherwise, should not be attributed to the VPN service provider.
+
+vpn_service
+The VPN service the IP is associated with
+
+bot
+The IP has been associated with known bot activity
+
+
+#Metadata
+category
+Whether the device is a business, isp, or hosting provider
+
+country
+The full name of the country the device is geographically located in
+
+country_code
+The two-character country code of the country the device is geographically located in
+
+city
+The city the device is geographically located in
+
+destination_country
+The full name or country code where GreyNoise sensor is physically located
+
+destination_country_code
+The two-character country code where GreyNoise sensor is physically located
+
+single_destination
+A boolean parameter that filters source country IPs that have only been observed in a single destination country
+
+organization
+The organization that owns the network that the IP address belongs to
+
+region
+The region the device is geographically located in
+
+rdns
+The reverse DNS record for the IP
+
+asn
+The autonomous system the IP address belongs to
+
+tor
+Whether or not the device is a known Tor exit node
+
+
+#Raw Data
+scan.port
+The port number(s) the devices has been observed scanning
+
+scan.protocol
+The protocol of the port the device has been observed scanning
+
+web.paths
+Any HTTP paths the device has been observed crawling the Internet for
+
+web.useragents
+Any HTTP user-agents the device has been observed using while crawling the Internet
+
+ja3.fingerprint
+The JA3 TLS/SSL fingerprint
+
+ja3.port
+The corresponding TCP port for the given JA3 fingerprint
+
+hassh.fingerprint
+The HASSH fingerprint
+
+hassh.port
+The corresponding TCP port for the given HASSH fingerprint
+
+
+#Examples
+cve:CVE-2017-17215
+Returns all devices that are probing the internet for or exploiting the "CVE-2017-17215" vulnerability
+tags:"Mirai"
+Returns all devices with the "Mirai" tag
+tags:"RDP Crawler"
+Returns all devices with the "RDP Crawler" tag
+classification:malicious country:Belgium
+Returns all compromised devices that are geographically located in Belgium
+classification:malicious rdns:*.gov*
+Returns all compromised devices that include .gov in their reverse DNS records
+organization:Microsoft classification:malicious
+Returns all compromised devices that belong to Microsoft
+(raw_data.scan.port:445 AND raw_data.scan.protocol:TCP) os:Windows*
+Return all devices scanning the Internet for port 445/TCP running Windows operating systems (Conficker/EternalBlue/WannaCry)
+web.useragents:*Googlebot* -organization:Google
+Returns all devices crawling the Internet with "GoogleBot" in their useragent from a network that does NOT belong to Google
+tags:"Siemens S7Comm Protocol Scanner" -classification:benign
+Returns all devices scanning the Internet for SCADA devices who ARE NOT tagged by GreyNoise as "benign" (Shodan/Project Sonar/Censys/BinaryEdge/Google/Bing/etc)
+classification:benign
+Returns all known benign IPs" scanning the Internet
+ja3.fingerprint:795bc7ce13f60d61e9ac03611dd36d90
+Returns all devices crawling the Internet with a matching client JA3 TLS/SSL fingerprint
+web.paths:"/HNAP1/"
+Returns all devices crawling the Internet for the HTTP path "/HNAP1/"
+8.0.0.0/8
+Returns all devices scanning the Internet from the CIDR block 8.0.0.0/8
+
+---- Thank You -----------
